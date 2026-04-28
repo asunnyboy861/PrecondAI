@@ -6,16 +6,19 @@ final class PurchaseManager {
     var isPremium = false
     var monthlyProduct: Product?
     var yearlyProduct: Product?
+    var lifetimeProduct: Product?
     var products: [Product] = []
 
     private let monthlyID = "com.zzoutuo.PrecondAI.monthly"
     private let yearlyID = "com.zzoutuo.PrecondAI.yearly"
+    private let lifetimeID = "com.zzoutuo.PrecondAI.lifetime"
 
     func loadProducts() async {
         do {
-            products = try await Product.products(for: [monthlyID, yearlyID])
+            products = try await Product.products(for: [monthlyID, yearlyID, lifetimeID])
             monthlyProduct = products.first { $0.id == monthlyID }
             yearlyProduct = products.first { $0.id == yearlyID }
+            lifetimeProduct = products.first { $0.id == lifetimeID }
         } catch {}
     }
 
@@ -45,7 +48,7 @@ final class PurchaseManager {
     func restorePurchases() async {
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result {
-                if transaction.productID == monthlyID || transaction.productID == yearlyID {
+                if transaction.productID == monthlyID || transaction.productID == yearlyID || transaction.productID == lifetimeID {
                     isPremium = true
                 }
                 await transaction.finish()
@@ -56,7 +59,7 @@ final class PurchaseManager {
     func checkPurchased() async {
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result {
-                if transaction.productID == monthlyID || transaction.productID == yearlyID {
+                if transaction.productID == monthlyID || transaction.productID == yearlyID || transaction.productID == lifetimeID {
                     isPremium = true
                 }
                 await transaction.finish()

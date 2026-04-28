@@ -10,6 +10,7 @@ struct PaywallView: View {
     enum PlanType {
         case monthly
         case yearly
+        case lifetime
     }
 
     var body: some View {
@@ -35,7 +36,7 @@ struct PaywallView: View {
                         PlanCard(
                             title: "Yearly",
                             price: "$19.99/yr",
-                            subtitle: "Save 44% — just $0.05/day",
+                            subtitle: "Save 44% — 1 month free trial",
                             isSelected: selectedPlan == .yearly,
                             badge: "Best Value"
                         ) { selectedPlan = .yearly }
@@ -43,14 +44,22 @@ struct PaywallView: View {
                         PlanCard(
                             title: "Monthly",
                             price: "$2.99/mo",
-                            subtitle: "Less than a cup of coffee",
+                            subtitle: "7 days free trial",
                             isSelected: selectedPlan == .monthly,
                             badge: nil
                         ) { selectedPlan = .monthly }
+
+                        PlanCard(
+                            title: "Lifetime",
+                            price: "$49.99",
+                            subtitle: "Pay once, use forever",
+                            isSelected: selectedPlan == .lifetime,
+                            badge: "Most Popular"
+                        ) { selectedPlan = .lifetime }
                     }
                     .padding(.horizontal)
 
-                    FeatureList()
+                    PaywallFeatureList()
 
                     Button(action: purchase) {
                         HStack {
@@ -59,7 +68,7 @@ struct PaywallView: View {
                                 ProgressView()
                                     .tint(.white)
                             } else {
-                                Text("Start 7-Day Free Trial")
+                                Text(buttonText)
                                     .fontWeight(.semibold)
                             }
                             Spacer()
@@ -72,7 +81,7 @@ struct PaywallView: View {
                     .padding(.horizontal)
                     .disabled(isPurchasing)
 
-                    Text("Cancel anytime. No charge during trial.")
+                    Text(subtitleText)
                         .font(.caption2)
                         .foregroundStyle(.secondary)
 
@@ -92,10 +101,39 @@ struct PaywallView: View {
         }
     }
 
+    private var buttonText: String {
+        switch selectedPlan {
+        case .monthly:
+            return "Start 7-Day Free Trial"
+        case .yearly:
+            return "Start 1-Month Free Trial"
+        case .lifetime:
+            return "Purchase Lifetime Access"
+        }
+    }
+
+    private var subtitleText: String {
+        switch selectedPlan {
+        case .monthly:
+            return "Cancel anytime. No charge during trial."
+        case .yearly:
+            return "Cancel anytime. No charge during 1-month trial."
+        case .lifetime:
+            return "One-time purchase. No subscription needed."
+        }
+    }
+
     private func purchase() {
         isPurchasing = true
         Task {
-            let product: Product? = selectedPlan == .yearly ? purchaseManager.yearlyProduct : purchaseManager.monthlyProduct
+            let product: Product? = switch selectedPlan {
+            case .yearly:
+                purchaseManager.yearlyProduct
+            case .monthly:
+                purchaseManager.monthlyProduct
+            case .lifetime:
+                purchaseManager.lifetimeProduct
+            }
             if let product {
                 _ = await purchaseManager.purchase(product)
             }
@@ -148,36 +186,35 @@ struct PlanCard: View {
             .padding(16)
             .background(isSelected ? Color.appBlue.opacity(0.1) : Color(.systemGray6).opacity(0.5))
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? Color.appBlue : Color.clear, lineWidth: 2)
-            )
         }
+        .buttonStyle(.plain)
     }
 }
 
-struct FeatureList: View {
-    let features = [
-        ("cloud.sun", "Weather-Aware Scheduling"),
-        ("battery.75", "Battery Safety Protection"),
-        ("calendar", "Calendar Integration"),
-        ("bell.badge", "Smart Departure Reminders"),
-        ("car.2.fill", "Multi-Vehicle Support"),
-        ("infinity", "Unlimited Schedules")
-    ]
+struct PaywallFeatureList: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            PaywallFeatureRow(icon: "cloud.sun", text: "Weather-aware scheduling")
+            PaywallFeatureRow(icon: "calendar.badge.clock", text: "Unlimited schedules")
+            PaywallFeatureRow(icon: "car.2", text: "Up to 3 vehicles")
+            PaywallFeatureRow(icon: "battery.100", text: "Battery protection")
+        }
+        .padding(.horizontal, 32)
+    }
+}
+
+struct PaywallFeatureRow: View {
+    let icon: String
+    let text: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            ForEach(features, id: \.0) { feature in
-                HStack(spacing: 12) {
-                    Image(systemName: feature.0)
-                        .foregroundStyle(Color.appBlue)
-                        .frame(width: 24)
-                    Text(feature.1)
-                        .font(.subheadline)
-                }
-            }
+        HStack {
+            Image(systemName: icon)
+                .foregroundStyle(Color.appBlue)
+                .frame(width: 24)
+            Text(text)
+                .font(.subheadline)
+            Spacer()
         }
-        .padding()
     }
 }

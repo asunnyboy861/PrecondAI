@@ -1,6 +1,6 @@
 # Pricing Configuration
 
-## Monetization Model: Subscription (IAP)
+## Monetization Model: Subscription (IAP) + One-time Purchase
 
 ## Subscription Group
 - **Group Name**: PrecondAI Premium
@@ -15,6 +15,7 @@
 - **Display Name**: PrecondAI Monthly
 - **Description**: Smart EV climate with weather AI
 - **Localization**: English (US)
+- **Free Trial**: 7 days
 
 ### 2. Yearly Subscription
 - **Reference Name**: Yearly Premium
@@ -23,6 +24,16 @@
 - **Display Name**: PrecondAI Yearly
 - **Description**: Best value smart EV climate
 - **Localization**: English (US)
+- **Free Trial**: 1 month (30 days)
+
+### 3. Lifetime Purchase (One-time)
+- **Reference Name**: Lifetime Access
+- **Product ID**: `com.zzoutuo.PrecondAI.lifetime`
+- **Price**: $49.99 one-time purchase
+- **Display Name**: PrecondAI Lifetime
+- **Description**: Pay once, use forever
+- **Localization**: English (US)
+- **Note**: No ongoing costs, all premium features forever
 
 ## Free Tier Features
 - Remote start/stop preconditioning
@@ -31,7 +42,7 @@
 - Manual time-based scheduling
 - Basic notifications
 
-## Premium Features (Subscription Required)
+## Premium Features (Subscription or Lifetime Required)
 - Weather-aware smart scheduling (core differentiator)
 - Unlimited schedules
 - Multi-vehicle support (up to 3)
@@ -41,8 +52,18 @@
 - Priority customer support
 
 ## Free Trial
-- **Duration**: 7 days
-- **Type**: Free trial (auto-converts to paid monthly)
+- **Monthly**: 7 days free trial
+- **Yearly**: 1 month (30 days) free trial
+- **Lifetime**: No trial (one-time purchase)
+- **Type**: Free trial (auto-converts to paid)
+
+## Pricing Comparison
+
+| Plan | Price | Trial | Equivalent Monthly | Savings |
+|------|-------|-------|-------------------|---------|
+| Monthly | $2.99/mo | 7 days | $2.99 | - |
+| Yearly | $19.99/yr | 1 month | $1.67/mo | 44% |
+| Lifetime | $49.99 once | None | ~$0.83/mo (5 years) | 72% |
 
 ## Policy Pages Required
 - Support Page: ✅ (Must include subscription management info)
@@ -50,8 +71,9 @@
 - Terms of Use: ✅ (REQUIRED for subscription apps)
 
 ## Apple IAP Compliance Checklist
-- [ ] Auto-renewal terms included in Terms
-- [ ] Cancellation instructions included
-- [ ] Pricing clearly stated
-- [ ] Free trial terms included (7 days)
-- [ ] Restore purchases functionality implemented
+- [x] Auto-renewal terms included in Terms
+- [x] Cancellation instructions included
+- [x] Pricing clearly stated
+- [x] Free trial terms included (7 days for monthly, 1 month for yearly)
+- [x] Restore purchases functionality implemented
+- [x] Lifetime purchase option available
