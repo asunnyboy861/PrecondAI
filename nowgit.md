@@ -15,10 +15,10 @@
 
 | Page | URL | Status |
 |------|-----|--------|
-| Landing Page | https://asunnyboy861.github.io/PrecondAI/ | ⏳ Pending |
-| Support | https://asunnyboy861.github.io/PrecondAI/support.html | ⏳ Pending |
-| Privacy Policy | https://asunnyboy861.github.io/PrecondAI/privacy.html | ⏳ Pending |
-| Terms of Use | https://asunnyboy861.github.io/PrecondAI/terms.html | ⏳ Pending |
+| Landing Page | https://asunnyboy861.github.io/PrecondAI/ | ✅ Active |
+| Support | https://asunnyboy861.github.io/PrecondAI/support.html | ✅ Active |
+| Privacy Policy | https://asunnyboy861.github.io/PrecondAI/privacy.html | ✅ Active |
+| Terms of Use | https://asunnyboy861.github.io/PrecondAI/terms.html | ✅ Active |
 
 **Note**: Terms of Use required for IAP subscription apps.
 
@@ -88,7 +88,22 @@ PrecondAI/
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| iOS App Source | ⏳ Not pushed | Ready for GitHub |
-| Policy Pages | ⏳ Not deployed | Will deploy to /docs |
-| GitHub Pages | ⏳ Not enabled | Will enable via API |
+| iOS App Source | ✅ Pushed | On GitHub main branch |
+| Policy Pages | ✅ Deployed | GitHub Pages from /docs |
+| GitHub Pages | ✅ Enabled | Source: /docs folder |
 | App Store Connect | ⏳ Not submitted | Pending screenshots |
+
+## SettingsView Links
+
+The following URLs are configured in the app's SettingsView:
+
+```swift
+// Support Page
+let supportURL = "https://asunnyboy861.github.io/PrecondAI/support.html"
+
+// Privacy Policy
+let privacyURL = "https://asunnyboy861.github.io/PrecondAI/privacy.html"
+
+// Terms of Use (Required for IAP)
+let termsURL = "https://asunnyboy861.github.io/PrecondAI/terms.html"
+```
