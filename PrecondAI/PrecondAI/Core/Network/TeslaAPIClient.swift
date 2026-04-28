@@ -1,56 +1,56 @@
 import Foundation
 
 actor TeslaAPIClient {
-    private let clientId: String
-    private let clientSecret: String
     private let baseURL = "https://fleet-api.prd.na.vn.cloud.tesla.com"
-    private var accessToken: String?
-    private var refreshToken: String?
 
-    init(clientId: String, clientSecret: String) {
-        self.clientId = clientId
-        self.clientSecret = clientSecret
-    }
-
-    func setAccessToken(_ token: String) {
-        self.accessToken = token
-    }
-
-    func setRefreshToken(_ token: String) {
-        self.refreshToken = token
+    private var accessToken: String? {
+        get throws {
+            return try KeychainTokenStorage.getAccessToken()
+        }
     }
 
     func startPreconditioning(vin: String) async throws {
+        let token = try await getValidToken()
         let endpoint = "/api/1/vehicles/\(vin)/command/auto_conditioning_start"
-        try await sendCommand(endpoint: endpoint, body: [:])
+        try await sendCommand(endpoint: endpoint, body: [:], token: token)
     }
 
     func stopPreconditioning(vin: String) async throws {
+        let token = try await getValidToken()
         let endpoint = "/api/1/vehicles/\(vin)/command/auto_conditioning_stop"
-        try await sendCommand(endpoint: endpoint, body: [:])
+        try await sendCommand(endpoint: endpoint, body: [:], token: token)
     }
 
     func setTemperature(vin: String, driverTemp: Double, passengerTemp: Double? = nil) async throws {
+        let token = try await getValidToken()
         let endpoint = "/api/1/vehicles/\(vin)/command/set_temps"
         var body: [String: Any] = ["driver_temp": driverTemp]
         if let pt = passengerTemp {
             body["passenger_temp"] = pt
         }
-        try await sendCommand(endpoint: endpoint, body: body)
+        try await sendCommand(endpoint: endpoint, body: body, token: token)
     }
 
     func getVehicleData(vin: String) async throws -> TeslaVehicleData {
+        let token = try await getValidToken()
         let endpoint = "/api/1/vehicles/\(vin)/vehicle_data"
-        return try await sendRequest(endpoint: endpoint)
+        return try await sendRequest(endpoint: endpoint, token: token)
     }
 
     func wakeUp(vin: String) async throws {
+        let token = try await getValidToken()
         let endpoint = "/api/1/vehicles/\(vin)/wake_up"
-        try await sendCommand(endpoint: endpoint, body: [:])
+        try await sendCommand(endpoint: endpoint, body: [:], token: token)
     }
 
-    private func sendCommand(endpoint: String, body: [String: Any]) async throws {
-        guard let token = accessToken else { throw APIError.unauthorized }
+    private func getValidToken() async throws -> String {
+        guard let token = try accessToken else {
+            throw APIError.unauthorized
+        }
+        return token
+    }
+
+    private func sendCommand(endpoint: String, body: [String: Any], token: String) async throws {
         let url = URL(string: baseURL + endpoint)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -66,8 +66,7 @@ actor TeslaAPIClient {
         if !(200...299).contains(httpResponse.statusCode) { throw APIError.unknown("Command failed: \(httpResponse.statusCode)") }
     }
 
-    private func sendRequest<T: Decodable>(endpoint: String) async throws -> T {
-        guard let token = accessToken else { throw APIError.unauthorized }
+    private func sendRequest<T: Decodable>(endpoint: String, token: String) async throws -> T {
         let url = URL(string: baseURL + endpoint)!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

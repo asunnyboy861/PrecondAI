@@ -83,28 +83,36 @@ struct DashboardView: View {
 
 @Observable
 final class DashboardViewModel {
+    private let teslaClient = TeslaAPIClient()
+    
     func quickCool(vehicle: Vehicle) {
         Task {
-            let client = TeslaAPIClient(clientId: "", clientSecret: "")
-            let service = VehicleService(teslaClient: client)
-            try? await service.startPreconditioning(vehicle: vehicle)
+            do {
+                try await teslaClient.startPreconditioning(vin: vehicle.vin ?? "")
+            } catch {
+                print("Quick cool failed: \(error)")
+            }
         }
     }
 
     func quickHeat(vehicle: Vehicle) {
         Task {
-            let client = TeslaAPIClient(clientId: "", clientSecret: "")
-            let service = VehicleService(teslaClient: client)
-            try? await service.setTemperature(vehicle: vehicle, driverTemp: 25.0)
-            try? await service.startPreconditioning(vehicle: vehicle)
+            do {
+                try await teslaClient.setTemperature(vin: vehicle.vin ?? "", driverTemp: 25.0)
+                try await teslaClient.startPreconditioning(vin: vehicle.vin ?? "")
+            } catch {
+                print("Quick heat failed: \(error)")
+            }
         }
     }
 
     func stopPrecondition(vehicle: Vehicle) {
         Task {
-            let client = TeslaAPIClient(clientId: "", clientSecret: "")
-            let service = VehicleService(teslaClient: client)
-            try? await service.stopPreconditioning(vehicle: vehicle)
+            do {
+                try await teslaClient.stopPreconditioning(vin: vehicle.vin ?? "")
+            } catch {
+                print("Stop precondition failed: \(error)")
+            }
         }
     }
 }

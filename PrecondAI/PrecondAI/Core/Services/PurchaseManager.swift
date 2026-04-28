@@ -43,16 +43,14 @@ final class PurchaseManager {
     }
 
     func restorePurchases() async {
-        do {
-            for await result in Transaction.currentEntitlements {
-                if case .verified(let transaction) = result {
-                    if transaction.productID == monthlyID || transaction.productID == yearlyID {
-                        isPremium = true
-                    }
-                    await transaction.finish()
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let transaction) = result {
+                if transaction.productID == monthlyID || transaction.productID == yearlyID {
+                    isPremium = true
                 }
+                await transaction.finish()
             }
-        } catch {}
+        }
     }
 
     func checkPurchased() async {

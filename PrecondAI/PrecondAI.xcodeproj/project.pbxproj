@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6A498A512F9F95C3009EF997 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A498A502F9F95C3009EF997 /* StoreKit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6A8039AD2F9EF6A400BBC471 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,14 +28,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A498A502F9F95C3009EF997 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		6A80399F2F9EF6A300BBC471 /* PrecondAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrecondAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A8039AC2F9EF6A400BBC471 /* PrecondAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrecondAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A8039B62F9EF6A400BBC471 /* PrecondAIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrecondAIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6A498A542F9F95E5009EF997 /* Exceptions for "PrecondAI" folder in "PrecondAI" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6A80399E2F9EF6A300BBC471 /* PrecondAI */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6A8039A12F9EF6A300BBC471 /* PrecondAI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6A498A542F9F95E5009EF997 /* Exceptions for "PrecondAI" folder in "PrecondAI" target */,
+			);
 			path = PrecondAI;
 			sourceTree = "<group>";
 		};
@@ -52,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A498A512F9F95C3009EF997 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +91,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A498A4F2F9F95C3009EF997 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6A498A502F9F95C3009EF997 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6A8039962F9EF6A300BBC471 = {
 			isa = PBXGroup;
 			children = (
 				6A8039A12F9EF6A300BBC471 /* PrecondAI */,
 				6A8039AF2F9EF6A400BBC471 /* PrecondAITests */,
 				6A8039B92F9EF6A400BBC471 /* PrecondAIUITests */,
+				6A498A4F2F9F95C3009EF997 /* Frameworks */,
 				6A8039A02F9EF6A300BBC471 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -395,11 +423,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PrecondAI/PrecondAI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JP4TN5PTS3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PrecondAI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -424,11 +454,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PrecondAI/PrecondAI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JP4TN5PTS3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PrecondAI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

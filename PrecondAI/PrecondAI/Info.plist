@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>PrecondAI needs your location to provide accurate weather data for preconditioning your vehicle.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>PrecondAI uses your location to monitor weather conditions and optimize vehicle preconditioning schedules.</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.zzoutuo.PrecondAI.preconditioning</string>
+	</array>
+	<key>TESLA_CLIENT_ID</key>
+	<string>$(TESLA_CLIENT_ID)</string>
+</dict>
+</plist>

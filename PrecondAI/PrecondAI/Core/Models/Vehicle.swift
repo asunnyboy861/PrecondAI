@@ -8,6 +8,9 @@ final class Vehicle {
     var model: String
     var year: Int
     var displayName: String
+    var vin: String?
+    var isTeslaConnected: Bool
+    var lastAuthDate: Date?
     var batteryLevel: Int
     var chargingState: String
     var isClimateOn: Bool
@@ -21,6 +24,9 @@ final class Vehicle {
         self.model = model
         self.year = year
         self.displayName = displayName
+        self.vin = nil
+        self.isTeslaConnected = false
+        self.lastAuthDate = nil
         self.batteryLevel = 0
         self.chargingState = "UNKNOWN"
         self.isClimateOn = false
