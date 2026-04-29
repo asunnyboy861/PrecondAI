@@ -32,6 +32,7 @@ struct WeatherPreviewCard: View {
                     }
                 }
             }
+            WeatherAttributionView()
         }
         .padding(12)
         .background(Color(.systemGray6).opacity(0.5))
