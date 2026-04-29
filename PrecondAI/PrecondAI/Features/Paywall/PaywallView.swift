@@ -36,7 +36,7 @@ struct PaywallView: View {
                         PlanCard(
                             title: "Yearly",
                             price: "$19.99/yr",
-                            subtitle: "Save 44% — 1 month free trial",
+                            subtitle: "1 month free, then $19.99/year",
                             isSelected: selectedPlan == .yearly,
                             badge: "Best Value"
                         ) { selectedPlan = .yearly }
@@ -44,7 +44,7 @@ struct PaywallView: View {
                         PlanCard(
                             title: "Monthly",
                             price: "$2.99/mo",
-                            subtitle: "7 days free trial",
+                            subtitle: "7 days free, then $2.99/month",
                             isSelected: selectedPlan == .monthly,
                             badge: nil
                         ) { selectedPlan = .monthly }
@@ -104,22 +104,22 @@ struct PaywallView: View {
     private var buttonText: String {
         switch selectedPlan {
         case .monthly:
-            return "Start 7-Day Free Trial"
+            return "Start Free Trial - $2.99/month After"
         case .yearly:
-            return "Start 1-Month Free Trial"
+            return "Start Free Trial - $19.99/year After"
         case .lifetime:
-            return "Purchase Lifetime Access"
+            return "Purchase Lifetime Access - $49.99"
         }
     }
 
     private var subtitleText: String {
         switch selectedPlan {
         case .monthly:
-            return "Cancel anytime. No charge during trial."
+            return "7-day free trial, then $2.99/month. Cancel anytime in Settings."
         case .yearly:
-            return "Cancel anytime. No charge during 1-month trial."
+            return "1-month free trial, then $19.99/year. Cancel anytime in Settings."
         case .lifetime:
-            return "One-time purchase. No subscription needed."
+            return "One-time purchase of $49.99. No subscription. No recurring charges."
         }
     }
 
