@@ -5,9 +5,15 @@ struct WeatherPreviewCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label("Weather Preview", systemImage: "cloud.sun")
-                .font(.subheadline)
-                .fontWeight(.medium)
+            HStack {
+                Label("Weather Preview", systemImage: "cloud.sun")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                Spacer()
+                Text(" Weather")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
 
             ForEach(previews.prefix(5)) { item in
                 HStack {
@@ -32,7 +38,6 @@ struct WeatherPreviewCard: View {
                     }
                 }
             }
-            WeatherAttributionView()
         }
         .padding(12)
         .background(Color(.systemGray6).opacity(0.5))

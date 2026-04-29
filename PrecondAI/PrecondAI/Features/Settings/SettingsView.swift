@@ -53,6 +53,27 @@ struct SettingsView: View {
                 }
             }
 
+            Section("Data Sources") {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("Weather Data")
+                        Spacer()
+                        Text(" Weather")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    Link(destination: URL(string: "https://weatherkit.apple.com/legal-attribution.html")!) {
+                        HStack {
+                            Text("Apple Weather Legal Attribution")
+                                .font(.caption)
+                            Spacer()
+                            Image(systemName: "arrow.up.right.square")
+                                .font(.caption)
+                        }
+                    }
+                }
+            }
+
             Section {
                 Button("Reset Onboarding", role: .destructive) {
                     hasCompletedOnboarding = false
