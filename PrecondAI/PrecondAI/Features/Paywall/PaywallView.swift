@@ -6,12 +6,18 @@ struct PaywallView: View {
     let purchaseManager: PurchaseManager
     @State private var selectedPlan: PlanType = .yearly
     @State private var isPurchasing = false
+    @State private var isRestoring = false
+    @State private var showRestoreAlert = false
+    @State private var restoreMessage = ""
 
     enum PlanType {
         case monthly
         case yearly
         case lifetime
     }
+
+    private let privacyURL = URL(string: "https://asunnyboy861.github.io/PrecondAI/privacy.html")!
+    private let termsURL = URL(string: "https://asunnyboy861.github.io/PrecondAI/terms.html")!
 
     var body: some View {
         NavigationStack {
@@ -85,11 +91,33 @@ struct PaywallView: View {
                         .font(.caption2)
                         .foregroundStyle(.secondary)
 
-                    Button("Restore Purchases") {
-                        Task { await purchaseManager.restorePurchases() }
+                    Button(action: restorePurchases) {
+                        HStack {
+                            if isRestoring {
+                                ProgressView()
+                                    .scaleEffect(0.8)
+                            }
+                            Text("Restore Purchases")
+                        }
                     }
                     .font(.caption)
                     .foregroundStyle(Color.appBlue)
+                    .disabled(isRestoring)
+
+                    HStack(spacing: 4) {
+                        Text("By subscribing, you agree to our")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        Link("Terms of Use", destination: termsURL)
+                            .font(.caption2)
+                        Text("and")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        Link("Privacy Policy", destination: privacyURL)
+                            .font(.caption2)
+                    }
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
                 }
                 .padding(.vertical, 32)
             }
@@ -97,6 +125,11 @@ struct PaywallView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") { dismiss() }
                 }
+            }
+            .alert("Restore Purchases", isPresented: $showRestoreAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(restoreMessage)
             }
         }
     }
@@ -141,6 +174,20 @@ struct PaywallView: View {
             if purchaseManager.isPremium {
                 dismiss()
             }
+        }
+    }
+
+    private func restorePurchases() {
+        isRestoring = true
+        Task {
+            await purchaseManager.restorePurchases()
+            isRestoring = false
+            if purchaseManager.isPremium {
+                restoreMessage = "Your purchases have been successfully restored."
+            } else {
+                restoreMessage = "No previous purchases found. If you believe this is an error, please try again or contact support."
+            }
+            showRestoreAlert = true
         }
     }
 }
